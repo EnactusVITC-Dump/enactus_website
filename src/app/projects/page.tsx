@@ -49,7 +49,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-8 justify-items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20 pt-10 justify-items-center">
             {filteredProjects.map((project) => (
               <div
                 key={project.name}
@@ -62,7 +62,7 @@ export default function ProjectsPage() {
                 >
                   {/* SVG for the tab shape to match the smooth curve */}
                   <svg
-                    className="absolute top-0 left-0 w-[140px] h-[40px] -translate-y-[98%]"
+                    className="absolute top-[1px] left-0 w-[140px] h-[40px] -translate-y-full"
                     viewBox="0 0 140 40"
                     preserveAspectRatio="none"
                   >
