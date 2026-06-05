@@ -8,9 +8,9 @@ export default function GlobalBackground() {
   const screenSize = useScreenSize()
 
   return (
-    <div className="fixed inset-0 z-[-1] bg-enactus-black overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 z-[-1] bg-transparent overflow-hidden pointer-events-none">
       {/* Background Image/Texture if needed, for now just black */}
-      <div className="absolute inset-0 bg-enactus-black opacity-100" />
+      <div className="absolute inset-0 bg-transparent" />
 
       <GooeyFilter id="gooey-filter-global" strength={5} />
 

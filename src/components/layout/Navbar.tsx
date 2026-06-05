@@ -12,7 +12,7 @@ const navLinks = [
   { label: "EVENTS", href: "/events" },
   { label: "PROJECTS", href: "/projects" },
   { label: "TEAM", href: "/team" },
-  { label: "SPONSORS", href: "/sponsors" },
+  { label: "COLLABS", href: "/collaborations" },
   { label: "ABOUT US", href: "/about" },
 ]
 

@@ -4,8 +4,9 @@ import "./globals.css"
 import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider"
 import Navbar from "@/components/layout/Navbar"
 import CustomCursor from "@/components/layout/CustomCursor"
-import GlobalBackground from "@/components/layout/GlobalBackground"
+
 import GlobalFrame from "@/components/layout/GlobalFrame"
+import ParticleField from "@/components/three/ParticleField"
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
@@ -47,7 +48,8 @@ export default function RootLayout({
     >
       <body className="font-dm-sans bg-enactus-black text-enactus-white antialiased">
         <SmoothScrollProvider>
-          <GlobalBackground />
+
+          <ParticleField />
           <CustomCursor />
           <GlobalFrame />
           <Navbar />
