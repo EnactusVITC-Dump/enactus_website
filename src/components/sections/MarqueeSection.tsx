@@ -10,9 +10,6 @@ const marqueeItems = [
 ]
 
 export default function MarqueeSection() {
-  const content = marqueeItems.join(" · ") + " · "
-  const repeatedContent = content.repeat(4)
-
   return (
     <section className="relative bg-enactus-off-black border-y border-[rgba(245,200,66,0.12)] py-8 overflow-hidden">
       {/* Row 1 - scrolls left */}

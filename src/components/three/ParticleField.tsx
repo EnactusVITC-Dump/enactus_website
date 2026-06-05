@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo, useEffect } from "react"
+import { useRef, useMemo, useEffect, useState } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -11,7 +11,7 @@ function Particles() {
 
   const count = 300
 
-  const { positions, velocities } = useMemo(() => {
+  const [{ positions, velocities }] = useState(() => {
     const positions = new Float32Array(count * 3)
     const velocities = new Float32Array(count * 3)
 
@@ -26,7 +26,7 @@ function Particles() {
     }
 
     return { positions, velocities }
-  }, [])
+  })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

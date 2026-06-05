@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useCallback } from "react"
 
 const stats = [
   { value: 200, suffix: "+", label: "Active Members" },
@@ -21,27 +21,7 @@ export default function StatsSection() {
   const countersRef = useRef<HTMLSpanElement[]>([])
   const hasAnimated = useRef(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated.current) {
-            hasAnimated.current = true
-            animateCounters()
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  const animateCounters = () => {
+  const animateCounters = useCallback(() => {
     countersRef.current.forEach((el, i) => {
       if (!el) return
       const target = stats[i].value
@@ -65,7 +45,27 @@ export default function StatsSection() {
 
       requestAnimationFrame(animate)
     })
-  }
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated.current) {
+            hasAnimated.current = true
+            animateCounters()
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [animateCounters])
 
   return (
     <section ref={statsRef} className="relative border-y border-[rgba(245,200,66,0.12)]">
