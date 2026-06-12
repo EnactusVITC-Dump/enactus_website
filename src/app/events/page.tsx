@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import EventsGalleryHero from "@/components/sections/EventsGalleryHero"
+import EventsHero from "@/components/sections/EventsHero"
 import EventsGrid from "@/components/sections/EventsGrid"
 import Footer from "@/components/layout/Footer"
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <EventsGalleryHero />
+      <EventsHero />
       <EventsGrid />
       <Footer />
     </div>

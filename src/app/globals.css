@@ -240,13 +240,13 @@ body {
 .face.text p {
   width: 54000px;
   margin: 0;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-size: 140px;
-  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: 180px;
+  color: var(--gold);
   white-space: nowrap;
   animation: left 120s linear infinite;
   text-transform: uppercase;
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -2px;
 }
 

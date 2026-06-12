@@ -1,21 +1,16 @@
 "use client"
 
-import { PoemAnimation } from "@/components/ui/3d-animation"
-
-const repeatedText = Array(100).fill("<span>OUR</span> EVENTS ").join("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-
-const ANIMATION_DATA = {
-    poemHTML: `<p>${repeatedText}</p>`,
-    backgroundImageUrl: "https://i.ibb.co/q3XSxR9W/20250831-120144.jpg",
-    boyImageUrl: "" // Removed people as requested
-};
-
 export default function EventsHero() {
   return (
-    <PoemAnimation
-        poemHTML={ANIMATION_DATA.poemHTML}
-        backgroundImageUrl={ANIMATION_DATA.backgroundImageUrl}
-        boyImageUrl={ANIMATION_DATA.boyImageUrl}
-    />
+    <section className="pt-32 px-6 md:px-12">
+      <div className="max-w-[1600px] mx-auto">
+        <h1 className="font-bebas text-enactus-white mb-4 leading-none" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
+          OUR <span className="text-gold">EVENTS</span>
+        </h1>
+        <p className="font-dm-sans text-[rgba(240,236,228,0.5)] text-lg max-w-xl">
+          Impactful events that foster entrepreneurship and create lasting social change in our communities.
+        </p>
+      </div>
+    </section>
   )
 }
