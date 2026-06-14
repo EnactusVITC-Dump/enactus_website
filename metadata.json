@@ -1,0 +1,6 @@
+{
+  "name": "Project Inara",
+  "description": "Upcycling discarded coconut shells to empower Irular tribal women in Kalpakkam, Tamil Nadu. From discarded shell to dignified craft.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
