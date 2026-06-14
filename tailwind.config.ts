@@ -24,6 +24,12 @@ const config: Config = {
         bebas: ["var(--font-bebas-neue)", "sans-serif"],
         syne: ["var(--font-syne)", "sans-serif"],
         "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
+        serif: ["var(--font-serif)", "serif"],
+        handwritten: ["var(--font-handwritten)", "cursive"],
+        sans: ["var(--font-sans)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        display: ["var(--font-display)", "serif"],
+        distressed: ["var(--font-distressed)", "monospace"],
       },
       animation: {
         "marquee-left": "marquee-scroll 30s linear infinite",

@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600;700&family=Cinzel+Decorative:wght@700;900&family=Special+Elite&display=swap');
+:root {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-handwritten: "Caveat", cursive;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-display: "Cinzel Decorative", serif;
+  --font-distressed: "Special Elite", monospace;
+}
+
+/* Hide default cursor on desktop device screens for custom coconut cursor */
+@media (min-width: 769px) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Lenis scroll mechanics */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  scroll-down-prevent: true;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Scroll snap container styles for mobile layouts */
+.mobile-snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+.mobile-snap-section {
+  scroll-snap-align: start;
+}
+
+/* Reduce motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-sway, .animate-pulse {
+    animation: none !important;
+  }
+}
+

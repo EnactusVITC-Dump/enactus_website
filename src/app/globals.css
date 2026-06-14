@@ -166,3 +166,13 @@ body {
 .marquee-filled {
   color: var(--gold);
 }
+
+/* Inara Standalone Overrides */
+body.inara-standalone nav,
+body.inara-standalone .fixed.inset-0.z-\[40\],
+body.inara-standalone canvas {
+  display: none !important;
+}
+body.inara-standalone main {
+  padding: 0 !important;
+}
