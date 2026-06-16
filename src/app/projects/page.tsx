@@ -5,10 +5,10 @@ import Footer from "@/components/layout/Footer"
 
 const projects = [
   { name: "Project Pooranya", category: "Livelihood", tags: ["Livelihood", "Women"], description: "Empowering women through skill development and entrepreneurship training in underserved communities." },
-  { name: "Project Minavar", category: "Education", tags: ["Education", "Technology"], description: "Bridging the digital divide through technology education and access programs." },
+  { name: "Project Minavar", href: "/projects/minavar", category: "Education", tags: ["Education", "Technology"], description: "Bridging the digital divide through technology education and access programs." },
   { name: "Project Taru", category: "Sustainability", tags: ["Sustainability", "Farming"], description: "Promoting sustainable farming practices and environmental awareness in rural communities." },
   { name: "Project Naari", category: "Health", tags: ["Health", "Community"], description: "Improving health outcomes through community awareness and accessible healthcare solutions." },
-  { name: "Project Inara", category: "Health", tags: ["Health", "Community"], description: "Improving health outcomes through community awareness and accessible healthcare solutions." },
+  { name: "Project Inara", href: "/projects/inara", category: "Health", tags: ["Health", "Community"], description: "Improving health outcomes through community awareness and accessible healthcare solutions." },
 ]
 
 const categories = ["All", "Livelihood", "Education", "Sustainability", "Health"]
@@ -53,6 +53,7 @@ export default function ProjectsPage() {
             {filteredProjects.map((project) => (
               <div
                 key={project.name}
+                onClick={() => project.href && window.open(project.href, '_blank')}
                 className="relative w-full max-w-[327px] aspect-[327/295] group cursor-pointer"
                 data-cursor-hover
               >
