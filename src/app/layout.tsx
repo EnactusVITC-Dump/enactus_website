@@ -46,6 +46,9 @@ export default function RootLayout({
       lang="en"
       className={`${bebasNeue.variable} ${syne.variable} ${dmSans.variable}`}
     >
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&amp;family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
+      </head>
       <body className="font-dm-sans bg-enactus-black text-enactus-white antialiased">
         <SmoothScrollProvider>
 
@@ -65,3 +68,4 @@ export default function RootLayout({
     </html>
   )
 }
+

@@ -1,0 +1,89 @@
+
+/* Minavar Scoped Theme Variables */
+body.minavar-standalone {
+  --radius: 1rem;
+  --background: oklch(0.16 0.04 250);
+  --foreground: oklch(0.97 0.01 90);
+  --card: oklch(0.22 0.05 250);
+  --card-foreground: oklch(0.97 0.01 90);
+  --popover: oklch(0.22 0.05 250);
+  --popover-foreground: oklch(0.97 0.01 90);
+  --primary: oklch(0.78 0.14 55);
+  --primary-foreground: oklch(0.18 0.04 250);
+  --secondary: oklch(0.32 0.06 230);
+  --secondary-foreground: oklch(0.97 0.01 90);
+  --muted: oklch(0.28 0.04 240);
+  --muted-foreground: oklch(0.75 0.03 230);
+  --accent: oklch(0.72 0.16 200);
+  --accent-foreground: oklch(0.16 0.04 250);
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.72 0.16 200);
+
+  /* Sunset */
+  --sunset-peach: oklch(0.88 0.08 65);
+  --sunset-coral: oklch(0.74 0.16 38);
+  --sunset-gold: oklch(0.82 0.14 78);
+  --sunset-lavender: oklch(0.55 0.10 320);
+
+  /* Ocean */
+  --wave-foam: oklch(0.95 0.02 200);
+  --wave-teal: oklch(0.62 0.08 200);
+  --wave-deep: oklch(0.42 0.08 230);
+  --ocean-indigo: oklch(0.25 0.07 255);
+  --ocean-abyss: oklch(0.12 0.05 255);
+  --bio-cyan: oklch(0.82 0.16 200);
+  --pearl: oklch(0.96 0.02 90);
+
+  --font-display: "Fraunces", "DM Serif Display", Georgia, serif;
+  --font-choco: "Bagel Fat One", "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Apply base styling to the scoped body */
+  background: var(--ocean-abyss);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.minavar-standalone * { 
+  border-color: var(--border); 
+}
+
+body.minavar-standalone ::selection { 
+  background: var(--sunset-coral); 
+  color: var(--ocean-abyss); 
+}
+
+/* Hide global enactus elements to isolate microsite */
+body.minavar-standalone nav.fixed.z-\[100\],
+body.minavar-standalone .fixed.inset-0.z-\[40\],
+body.minavar-standalone canvas,
+body.minavar-standalone .z-\[9999\],
+body.minavar-standalone .z-\[9998\] {
+  display: none !important;
+}
+
+body.minavar-standalone {
+  cursor: auto !important;
+}
+
+body.minavar-standalone * {
+  cursor: auto;
+}
+
+body.minavar-standalone main {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.minavar-standalone main > div {
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+
+
