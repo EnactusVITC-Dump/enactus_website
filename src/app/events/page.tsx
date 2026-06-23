@@ -1,6 +1,6 @@
 "use client"
 
-import Footer from "@/components/layout/Footer"
+
 
 const events = [
   { date: "Mar 2025", title: "Enactus National Competition", description: "Competed against 50+ teams from across India, presenting our social enterprise projects.", status: "upcoming" },
@@ -30,11 +30,10 @@ export default function EventsPage() {
             {events.map((event, i) => (
               <div key={i} className="relative pl-14 md:pl-24 pb-16 last:pb-0 group" data-cursor-hover>
                 {/* Dot */}
-                <div className={`absolute left-[11px] md:left-[27px] top-1 w-3 h-3 rounded-full border-2 ${
-                  event.status === "upcoming"
-                    ? "bg-gold border-gold"
-                    : "bg-transparent border-[rgba(245,200,66,0.4)] group-hover:bg-gold group-hover:border-gold"
-                } transition-all duration-300`} />
+                <div className={`absolute left-[11px] md:left-[27px] top-1 w-3 h-3 rounded-full border-2 ${event.status === "upcoming"
+                  ? "bg-gold border-gold"
+                  : "bg-transparent border-[rgba(245,200,66,0.4)] group-hover:bg-gold group-hover:border-gold"
+                  } transition-all duration-300`} />
 
                 {/* Date */}
                 <span className="font-syne text-[11px] font-bold uppercase tracking-[2px] text-[rgba(240,236,228,0.3)] block mb-2">
@@ -60,7 +59,7 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }

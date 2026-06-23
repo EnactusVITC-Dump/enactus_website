@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Footer from "@/components/layout/Footer"
+
 
 const projects = [
   { name: "Project Pooranya", category: "Livelihood", tags: ["Livelihood", "Women"], description: "Empowering women through skill development and entrepreneurship training in underserved communities." },
@@ -98,7 +98,7 @@ export default function ProjectsPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }

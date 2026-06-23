@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Footer from "@/components/layout/Footer"
+
 
 const team = [
   { name: "Team Member", role: "President", department: "Core" },
@@ -66,7 +66,7 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }

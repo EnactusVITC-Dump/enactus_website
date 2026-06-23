@@ -1,6 +1,6 @@
 "use client"
 
-import Footer from "@/components/layout/Footer"
+
 
 const collabs = [
   "Collab 1",
@@ -54,7 +54,7 @@ export default function CollabsPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }

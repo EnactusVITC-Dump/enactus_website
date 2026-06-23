@@ -8,7 +8,7 @@ import MarqueeSection from "@/components/sections/MarqueeSection"
 import WhatWeDoSection from "@/components/sections/WhatWeDoSection"
 import StatsSection from "@/components/sections/StatsSection"
 import ProjectsSection from "@/components/sections/ProjectsSection"
-import Footer from "@/components/layout/Footer"
+
 
 export default function Home() {
   return (
@@ -22,7 +22,7 @@ export default function Home() {
         <WhatWeDoSection />
         <StatsSection />
         <ProjectsSection />
-        <Footer />
+
       </div>
     </>
   )
