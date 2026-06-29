@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useMemo, useRef } from "react"
+import { Suspense, useMemo, useRef, useState, useEffect } from "react"
 import { Billboard, Float, useTexture } from "@react-three/drei"
 import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
@@ -296,8 +296,20 @@ function DustField() {
 }
 
 function GlobeScene() {
+  const [scale, setScale] = useState(1)
+
+  useEffect(() => {
+    const checkScale = () => {
+      // Smoothly scale down on screens smaller than 550px, capped at 1
+      setScale(Math.min(1, window.innerWidth / 550))
+    }
+    checkScale()
+    window.addEventListener("resize", checkScale)
+    return () => window.removeEventListener("resize", checkScale)
+  }, [])
+
   return (
-    <>
+    <group scale={scale}>
       <ambientLight intensity={0.45} />
       <directionalLight position={[-3, 2, 4]} intensity={1.4} color="#F0ECE4" />
       <pointLight position={[2.8, 1.3, 2.2]} intensity={42} color={GOLD} distance={7} />
@@ -310,7 +322,7 @@ function GlobeScene() {
         <OrbitRing radius={1.62} rotation={[1.36, 0.06, -0.42]} speed={-0.2} nodes={6} opacity={0.24} />
         <LogoCore />
       </group>
-    </>
+    </group>
   )
 }
 
@@ -324,12 +336,13 @@ function GlobeFallback() {
 
 export default function CollaborationGlobe() {
   return (
-    <div className="relative mx-auto aspect-[16/10] w-full max-w-[620px] overflow-visible md:aspect-[16/9]">
+    <div className="relative mx-auto aspect-square w-full max-w-[620px] overflow-visible md:aspect-[16/9]">
       <div className="pointer-events-none absolute inset-[10%] rounded-full bg-gold/15 blur-[70px]" />
       <Canvas
         camera={{ position: [0, 0, 5.1], fov: 42 }}
         dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        className="outline-none"
       >
         <Suspense fallback={null}>
           <GlobeScene />
