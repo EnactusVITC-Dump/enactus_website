@@ -1,6 +1,5 @@
 "use client"
 
-import Footer from "@/app/about/Footer"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
@@ -72,6 +71,18 @@ function AnimatedCounter({ from, to, duration = 2, label, suffix = "" }: { from:
   )
 }
 
+const RocketIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>
+)
+
+const UsersIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+)
+
+const LightbulbIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+)
+
 export default function AboutPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -81,7 +92,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <section className="relative pt-[80px] pb-[80px] px-6 min-h-[calc(100vh-100px)] bg-transparent overflow-hidden flex flex-col justify-center">
+      <section className="relative pt-[80px] pb-[80px] px-6 bg-transparent overflow-hidden flex flex-col justify-center">
         {/* Subtle World Map Background & Network Grid */}
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.2]"
           style={{
@@ -290,7 +301,73 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
+      {/* Global Impact Header (Top Center) */}
+      <section className="relative bg-transparent pb-16 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10 mb-8 mt-4">
+          <div className="flex flex-col items-center justify-center text-center relative z-10">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-[40px] h-[1px] bg-[#F5C842] opacity-50"></div>
+              <h3 className="font-bebas text-[#FFFFFF] text-[20px] tracking-widest drop-shadow-md">OUR GLOBAL IMPACT</h3>
+              <div className="w-[40px] h-[1px] bg-[#F5C842] opacity-50"></div>
+            </div>
+
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-16 w-full relative mt-8 xl:mt-0">
+              {/* Left text */}
+              <div className="flex flex-col items-center xl:items-start text-center xl:text-left xl:absolute xl:left-[5%] xl:-top-4">
+                <h2 className="font-bebas text-[#FFFFFF] text-[40px] xl:text-[56px] leading-[0.9] drop-shadow-lg">
+                  TURNING<br />
+                  <span className="text-[#F5C842]">IDEAS</span><br />
+                  INTO <span className="text-[#F5C842]">IMPACT</span>
+                </h2>
+                <p className="font-dm-sans text-gray-400 mt-2 text-[14px] max-w-[200px]">
+                  We innovate today for a better tomorrow.
+                </p>
+              </div>
+
+              {/* Center Impact Cards */}
+              <div className="flex flex-row flex-wrap justify-center gap-4 z-10">
+                {/* Card 1 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <RocketIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">15+</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1">PROJECTS</span>
+                </motion.div>
+
+                {/* Card 2 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <UsersIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">500+</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1 text-center leading-tight">STUDENTS IMPACTED</span>
+                </motion.div>
+
+                {/* Card 3 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <LightbulbIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">4</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1 text-center leading-tight">SOCIAL VENTURES</span>
+                </motion.div>
+              </div>
+
+              {/* Right text */}
+              <div className="xl:absolute xl:right-[5%] xl:top-0 transform xl:rotate-[-5deg]">
+                <h2 className="font-bebas text-[#FFFFFF] text-[32px] md:text-[42px] leading-[0.9] drop-shadow-lg" style={{ fontFamily: "'Caveat', cursive" }}>
+                  Be the <br /><span className="text-[#F5C842] text-[40px] md:text-[50px]">CHANGE!</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

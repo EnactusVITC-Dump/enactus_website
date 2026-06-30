@@ -13,7 +13,7 @@ const events = [
 export default function EventsPage() {
   return (
     <>
-      <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen">
+      <section className="pt-32 pb-12 md:pb-16 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto">
           <h1 className="font-bebas text-enactus-white mb-4" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
             <span className="text-gold">EVENTS</span> & TIMELINE
