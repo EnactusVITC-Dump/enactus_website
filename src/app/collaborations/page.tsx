@@ -1,6 +1,5 @@
 "use client"
 
-<<<<<<< HEAD
 import Link from "next/link"
 import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
@@ -14,9 +13,6 @@ import {
   Users,
 } from "lucide-react"
 import Footer from "@/components/layout/Footer"
-=======
-
->>>>>>> origin/main
 
 const CollaborationGlobe = dynamic(
   () => import("@/components/three/CollaborationGlobe"),
