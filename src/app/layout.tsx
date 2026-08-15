@@ -8,6 +8,8 @@ import CustomCursor from "@/components/layout/CustomCursor"
 import GlobalFrame from "@/components/layout/GlobalFrame"
 import ParticleField from "@/components/three/ParticleField"
 
+import Footer from "@/components/layout/Footer"
+
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: "400",
@@ -53,13 +55,14 @@ export default function RootLayout({
           <CustomCursor />
           <GlobalFrame />
           <Navbar />
-          
+
           {/* Main content sits inside the yellow frame */}
-          <main className="relative z-[10] pt-[120px] px-[20px] pb-[20px] min-h-screen">
+          <main className="relative z-[10] pt-[120px] px-[20px] pb-[20px]">
             <div className="bg-transparent rounded-t-[40px] overflow-hidden">
               {children}
             </div>
           </main>
+          <Footer />
         </SmoothScrollProvider>
       </body>
     </html>

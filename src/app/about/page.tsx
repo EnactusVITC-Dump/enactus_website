@@ -1,93 +1,373 @@
 "use client"
 
 import Image from "next/image"
-import Footer from "@/components/layout/Footer"
+import { motion, useInView } from "framer-motion"
+import { useRef, useEffect, useState } from "react"
 
-const values = [
-  { title: "Entrepreneurial Action", description: "We believe in the power of business to create sustainable solutions to social problems." },
-  { title: "Collaboration", description: "Diverse perspectives and teamwork drive the best outcomes for communities." },
-  { title: "Integrity", description: "We hold ourselves to the highest ethical standards in everything we do." },
-  { title: "Innovation", description: "Creative thinking and bold ideas are at the heart of our approach to social change." },
-]
+// A simple hook for counting animation
+function AnimatedCounter({ from, to, duration = 2, label, suffix = "" }: { from: number, to: number, duration?: number, label: string, suffix?: string }) {
+  const nodeRef = useRef<HTMLSpanElement>(null)
+  const inView = useInView(nodeRef, { once: true, margin: "-100px" })
+
+  useEffect(() => {
+    if (inView && nodeRef.current) {
+      let startTimestamp: number | null = null;
+      const step = (timestamp: number) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
+        const easeOutExpo = (x: number): number => {
+          return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+        };
+        const currentProgress = easeOutExpo(progress);
+
+        let displayValue = "";
+        if (to % 1 !== 0) {
+          // For floats like 1.95
+          displayValue = (from + (to - from) * currentProgress).toFixed(2);
+        } else {
+          displayValue = Math.floor(from + (to - from) * currentProgress).toString();
+        }
+
+        if (nodeRef.current) {
+          nodeRef.current.textContent = displayValue + suffix;
+        }
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          if (nodeRef.current) {
+            nodeRef.current.textContent = to + suffix;
+          }
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+  }, [inView, from, to, duration, suffix]);
+
+  return (
+    <div className="flex flex-col items-center w-[120px] group cursor-default">
+      <motion.span
+        ref={nodeRef}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true }}
+        className="font-bebas text-[#F5C842] text-[40px] md:text-[52px] mb-2 leading-none drop-shadow-[0_0_15px_rgba(245,200,66,0.6)] transition-transform duration-300 group-hover:-translate-y-2"
+      >
+        {from}{suffix}
+      </motion.span>
+      <div className="relative w-[14px] h-[14px] bg-[#F5C842] rounded-full shadow-[0_0_20px_rgba(245,200,66,0.9)] mb-3 z-10 transition-transform duration-300 group-hover:scale-[1.5]">
+        <div className="absolute inset-0 bg-[#F5C842] rounded-full animate-ping opacity-75"></div>
+      </div>
+      <motion.span
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="font-bebas text-[#FFFFFF] text-[16px] md:text-[18px] tracking-wider text-center"
+      >
+        {label}
+      </motion.span>
+    </div>
+  )
+}
+
+const RocketIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>
+)
+
+const UsersIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+)
+
+const LightbulbIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+)
 
 export default function AboutPage() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
   return (
     <>
-      <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen">
-        <div className="max-w-[1600px] mx-auto">
-          <h1 className="font-bebas text-enactus-white mb-4" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
-            ABOUT <span className="text-gold">US</span>
-          </h1>
+      <section className="relative pt-[80px] pb-[80px] px-6 bg-transparent overflow-hidden flex flex-col justify-center">
+        {/* Subtle World Map Background & Network Grid */}
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.2]"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, rgba(245, 200, 66, 0.08) 0%, transparent 70%), url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zM20 0h20v20H20V0z' fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundSize: '100% 100%, 40px 40px'
+          }}>
+          {/* Abstract map paths */}
+          <svg className="w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice">
+            <path d="M 100,150 Q 250,50 400,180 T 600,200 T 800,150 T 900,250" fill="none" stroke="#F5C842" strokeWidth="1" strokeDasharray="4 4" className="animate-pulse" />
+            <path d="M 150,250 Q 300,350 450,220 T 650,280 T 850,200" fill="none" stroke="#FFFFFF" strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
+            <circle cx="400" cy="180" r="3" fill="#F5C842" className="animate-ping" style={{ animationDuration: '3s' }} />
+            <circle cx="600" cy="200" r="2" fill="#F5C842" />
+            <circle cx="800" cy="150" r="4" fill="#F5C842" className="animate-pulse" />
+            <circle cx="450" cy="220" r="3" fill="#FFFFFF" opacity="0.5" />
+            <circle cx="650" cy="280" r="4" fill="#F5C842" />
+          </svg>
+        </div>
 
-          {/* Story */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-32">
-            <div>
-              <p className="font-syne text-[11px] font-bold uppercase tracking-[3px] text-[rgba(240,236,228,0.4)] mb-6">
-                Our Story
-              </p>
-              <p className="font-dm-sans text-[rgba(240,236,228,0.6)] text-base leading-[1.8] mb-6">
-                Enactus VIT Chennai was established in 2012 as a chapter of the global Enactus network.
-                We are a community of student leaders who use entrepreneurial action to transform lives
-                and shape a better, more sustainable world.
-              </p>
-              <p className="font-dm-sans text-[rgba(240,236,228,0.6)] text-base leading-[1.8]">
-                Over the past 12 years, we&apos;ve launched 15+ social enterprise projects, impacted
-                over 10,000 lives, and competed at national and international stages. Our members
-                graduate with real-world experience in leadership, project management, and social innovation.
-              </p>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-md">
-                <Image
-                  src="/enactus-logo.png"
-                  alt="Enactus VIT Chennai"
-                  width={300}
-                  height={300}
-                  className="w-48 h-48 md:w-64 md:h-64 object-contain mx-auto opacity-20"
-                />
+        {/* Faint Watermark behind right diagram */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.5, scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-[20%] right-[-10%] md:right-[5%] flex items-center justify-center pointer-events-none z-0 transform rotate-[-25deg]"
+        >
+          <span
+            className="text-[#1A1A1A] font-bebas select-none opacity-20"
+            style={{
+              fontSize: "clamp(120px, 25vw, 300px)",
+              whiteSpace: "nowrap",
+              opacity: 0.2
+            }}
+          >ENACTUS
+          </span>
+        </motion.div>
+
+        <div className="max-w-[1200px] mx-auto w-full relative z-10 flex flex-col h-full">
+          {/* Main 2-column grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center flex-grow">
+
+            {/* Left Side: Typography */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+              onMouseMove={handleMouseMove}
+              className="flex flex-col justify-center max-w-[550px] p-8 md:p-12 relative group"
+            >
+              {/* Transparent Enactus Logo Background */}
+              <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none flex items-center justify-center">
+                <Image src="/enactus-logo.png" alt="Enactus Watermark" fill className="object-contain p-4" />
               </div>
+
+              {/* Interactive Hover Glow Effect */}
+              <div
+                className="absolute pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+                style={{
+                  background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(245,200,66,0.15), transparent 80%)`,
+                  left: 0, top: 0, right: 0, bottom: 0,
+                }}
+              />
+
+              <div className="relative z-10">
+                <h1 className="font-bebas text-[#F5C842] mb-6 drop-shadow-[0_0_15px_rgba(245,200,66,0.3)] transition-transform duration-300 group-hover:translate-x-2" style={{ fontSize: "clamp(48px, 6vw, 64px)", lineHeight: 0.9, letterSpacing: "0.02em" }}>
+                  ABOUT ENACTUS
+                </h1>
+
+                <h2 className="font-bebas text-[#FFFFFF] mb-8 transition-transform duration-300 delay-75 group-hover:translate-x-2" style={{ fontSize: "clamp(24px, 3vw, 32px)", lineHeight: 1.1, letterSpacing: "0.02em" }}>
+                  WE ARE A <span className="text-[#F5C842]">NONPROFIT</span> ORGANISATION<br />AND WORK <span className="text-[#F5C842]">WORLDWIDE</span>
+                </h2>
+
+                <p className="font-bebas text-gray-300 transition-transform duration-300 delay-150 group-hover:translate-x-2" style={{ fontSize: "clamp(16px, 2vw, 20px)", lineHeight: 1.4, letterSpacing: "0.05em" }}>
+                  ENACTUS IS A GLOBAL COMMUNITY OF<br />
+                  <span className="text-white hover:text-[#F5C842] transition-colors cursor-default">STUDENT</span>,<br />
+                  <span className="text-white hover:text-[#F5C842] transition-colors cursor-default">ACADEMIC</span> AND <span className="text-white hover:text-[#F5C842] transition-colors cursor-default">BUSINESS LEADERS</span> USING<br />
+                  <span className="text-[#F5C842]">ENTREPRENEURIAL ACTION</span> TO CREATE<br />
+                  <span className="text-[#F5C842]">SUSTAINABLE IMPACT</span>.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Right Side - Orbital Diagram */}
+            <div className="flex items-center justify-center relative w-full aspect-square max-w-[400px] md:max-w-[500px] mx-auto mt-10 lg:mt-0 perspective-[1000px]">
+
+              {/* Concentric Rings with Rotation */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] h-[40%] z-0 pointer-events-none">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                  className="w-full h-full rounded-full border border-dashed border-[#F5C842] opacity-40 shadow-[0_0_20px_rgba(245,200,66,0.2)_inset] relative"
+                >
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-[#F5C842] rounded-full shadow-[0_0_10px_#F5C842]"></div>
+                </motion.div>
+              </div>
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[56%] h-[56%] z-0 pointer-events-none">
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                  className="w-full h-full rounded-full border border-dashed border-[#F5C842] opacity-20 shadow-[0_0_15px_rgba(245,200,66,0.1)_inset] relative"
+                >
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-[#F5C842] rounded-full shadow-[0_0_10px_#F5C842]"></div>
+                </motion.div>
+              </div>
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[72%] h-[72%] z-0 pointer-events-none">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+                  className="w-full h-full rounded-full border border-dashed border-[#F5C842] opacity-10 shadow-[0_0_10px_rgba(245,200,66,0.05)_inset] relative"
+                >
+                  <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-[#F5C842] rounded-full shadow-[0_0_12px_#F5C842]"></div>
+                </motion.div>
+              </div>
+
+              {/* Connecting Lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 500 500">
+                {[
+                  { name: "INNOVATION", angle: -90 },
+                  { name: "IMPACT", angle: -18 },
+                  { name: "SUSTAINABILITY", angle: 54 },
+                  { name: "LEADERSHIP", angle: 126 },
+                  { name: "COMMUNITY", angle: -162 }
+                ].map((sat) => {
+                  const rad = sat.angle * (Math.PI / 180);
+                  const startX = 250 + 65 * Math.cos(rad);
+                  const startY = 250 + 65 * Math.sin(rad);
+                  const endX = 250 + 180 * Math.cos(rad);
+                  const endY = 250 + 180 * Math.sin(rad);
+                  return (
+                    <line key={sat.name} x1={startX} y1={startY} x2={endX} y2={endY} stroke="#F5C842" strokeWidth="1.5" opacity="0.4" className="animate-pulse" />
+                  )
+                })}
+              </svg>
+
+              {/* Core Node */}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="relative z-10 w-[26%] h-[26%] bg-[#F5C842] rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(245,200,66,0.6)] cursor-default"
+              >
+                <div className="absolute inset-0 rounded-full animate-ping bg-[#F5C842] opacity-30" style={{ animationDuration: '2s' }}></div>
+                <span className="font-bebas text-[#000000] text-[20px] md:text-[28px] tracking-[0.05em] pt-1 z-10">ENACTUS</span>
+              </motion.div>
+
+              {/* Satellite Nodes */}
+              {[
+                { name: "INNOVATION", angle: -90, textAbove: true },
+                { name: "IMPACT", angle: -18, textAbove: false },
+                { name: "SUSTAINABILITY", angle: 54, textAbove: false },
+                { name: "LEADERSHIP", angle: 126, textAbove: false },
+                { name: "COMMUNITY", angle: -162, textAbove: true }
+              ].map((sat, i) => {
+                const rad = sat.angle * (Math.PI / 180);
+                const dotX = 50 + (180 / 250) * 50 * Math.cos(rad);
+                const dotY = 50 + (180 / 250) * 50 * Math.sin(rad);
+
+                return (
+                  <motion.div
+                    key={sat.name}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: i * 0.1 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    viewport={{ once: true }}
+                    className="absolute z-10 group cursor-default"
+                    style={{ left: `${dotX}%`, top: `${dotY}%` }}
+                  >
+                    {/* The Dot */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[12px] h-[12px] bg-[#F5C842] rounded-full shadow-[0_0_20px_rgba(245,200,66,1)] transition-transform duration-300 group-hover:scale-[1.5]">
+                      <div className="absolute inset-0 rounded-full animate-ping bg-[#F5C842] opacity-50" style={{ animationDuration: '2s', animationDelay: `${i * 0.2}s` }}></div>
+                    </div>
+
+                    {/* The Text */}
+                    {sat.textAbove ? (
+                      <div className="absolute left-1/2 bottom-[12px] -translate-x-1/2 flex justify-center w-[150px]">
+                        <span className="text-[#FFFFFF] font-bebas text-[14px] md:text-[16px] tracking-wider mb-1 drop-shadow-md transition-all duration-300 group-hover:text-[#F5C842] group-hover:-translate-y-1">{sat.name}</span>
+                      </div>
+                    ) : (
+                      <div className="absolute left-1/2 top-[12px] -translate-x-1/2 flex justify-center w-[150px]">
+                        <span className="text-[#FFFFFF] font-bebas text-[14px] md:text-[16px] tracking-wider mt-1 drop-shadow-md transition-all duration-300 group-hover:text-[#F5C842] group-hover:translate-y-1">{sat.name}</span>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Mission */}
-          <div className="mb-32">
-            <p className="font-syne text-[11px] font-bold uppercase tracking-[3px] text-[rgba(240,236,228,0.4)] mb-6">
-              Mission
-            </p>
-            <h2 className="font-bebas text-enactus-white" style={{ fontSize: "clamp(32px, 5vw, 64px)" }}>
-              TO ENGAGE THE NEXT GENERATION OF{" "}
-              <span className="text-gold">ENTREPRENEURIAL LEADERS</span>{" "}
-              WHO USE INNOVATION AND BUSINESS PRINCIPLES TO IMPROVE THE WORLD
-            </h2>
-          </div>
+          {/* Bottom Stats Timeline */}
+          <div className="w-full relative mt-16 md:mt-12 pb-10">
+            {/* Timeline Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+              style={{ transformOrigin: "left" }}
+              className="absolute top-[46px] md:top-[58px] left-[5%] right-[5%] h-[2px] bg-[#F5C842] opacity-80 z-0 shadow-[0_0_10px_rgba(245,200,66,0.5)]"
+            ></motion.div>
 
-          {/* Values */}
-          <div>
-            <p className="font-syne text-[11px] font-bold uppercase tracking-[3px] text-[rgba(240,236,228,0.4)] mb-12">
-              Our Values
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {values.map((value, i) => (
-                <div
-                  key={value.title}
-                  className="bg-enactus-gray border border-[rgba(245,200,66,0.08)] p-10 group hover:border-[rgba(245,200,66,0.35)] transition-all duration-500"
-                >
-                  <span className="font-bebas text-[48px] text-gold opacity-[0.15] group-hover:opacity-[0.35] transition-opacity duration-500">
-                    0{i + 1}
-                  </span>
-                  <h3 className="font-syne text-[18px] font-bold text-enactus-white mt-2 mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="font-dm-sans text-[14px] text-[rgba(240,236,228,0.5)] leading-[1.8]">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
+            <div className="flex justify-between relative z-10 px-[5%]">
+              <AnimatedCounter from={0} to={36} label="COUNTRIES" suffix="+" duration={1.5} />
+              <AnimatedCounter from={0} to={1700} label="UNIVERSITIES" suffix="+" duration={2} />
+              <AnimatedCounter from={0} to={1.95} label="EMPOWERED" suffix="M+" duration={2} />
             </div>
           </div>
         </div>
       </section>
-      <Footer />
+
+      {/* Global Impact Header (Top Center) */}
+      <section className="relative bg-transparent pb-16 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10 mb-8 mt-4">
+          <div className="flex flex-col items-center justify-center text-center relative z-10">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-[40px] h-[1px] bg-[#F5C842] opacity-50"></div>
+              <h3 className="font-bebas text-[#FFFFFF] text-[20px] tracking-widest drop-shadow-md">OUR GLOBAL IMPACT</h3>
+              <div className="w-[40px] h-[1px] bg-[#F5C842] opacity-50"></div>
+            </div>
+
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-16 w-full relative mt-8 xl:mt-0">
+              {/* Left text */}
+              <div className="flex flex-col items-center xl:items-start text-center xl:text-left xl:absolute xl:left-[5%] xl:-top-4">
+                <h2 className="font-bebas text-[#FFFFFF] text-[40px] xl:text-[56px] leading-[0.9] drop-shadow-lg">
+                  TURNING<br />
+                  <span className="text-[#F5C842]">IDEAS</span><br />
+                  INTO <span className="text-[#F5C842]">IMPACT</span>
+                </h2>
+                <p className="font-dm-sans text-gray-400 mt-2 text-[14px] max-w-[200px]">
+                  We innovate today for a better tomorrow.
+                </p>
+              </div>
+
+              {/* Center Impact Cards */}
+              <div className="flex flex-row flex-wrap justify-center gap-4 z-10">
+                {/* Card 1 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <RocketIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">15+</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1">PROJECTS</span>
+                </motion.div>
+
+                {/* Card 2 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <UsersIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">500+</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1 text-center leading-tight">STUDENTS IMPACTED</span>
+                </motion.div>
+
+                {/* Card 3 */}
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(245,200,66,0.3)" }}
+                  className="bg-[rgba(26,26,26,0.6)] backdrop-blur-md border-2 border-[#F5C842] rounded-lg p-6 flex flex-col items-center justify-center w-[130px] md:w-[150px] aspect-square transition-colors cursor-default"
+                >
+                  <LightbulbIcon />
+                  <span className="font-bebas text-[#FFFFFF] text-[32px] md:text-[40px] mt-2 leading-none">4</span>
+                  <span className="font-bebas text-[#F5C842] text-[14px] tracking-wider mt-1 text-center leading-tight">SOCIAL VENTURES</span>
+                </motion.div>
+              </div>
+
+              {/* Right text */}
+              <div className="xl:absolute xl:right-[5%] xl:top-0 transform xl:rotate-[-5deg]">
+                <h2 className="font-bebas text-[#FFFFFF] text-[32px] md:text-[42px] leading-[0.9] drop-shadow-lg" style={{ fontFamily: "'Caveat', cursive" }}>
+                  Be the <br /><span className="text-[#F5C842] text-[40px] md:text-[50px]">CHANGE!</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

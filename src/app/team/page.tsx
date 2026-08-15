@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Footer from "@/components/layout/Footer"
+
 
 const team = [
   { name: "Team Member", role: "President", department: "Core" },
@@ -19,7 +19,7 @@ export default function TeamPage() {
 
   return (
     <>
-      <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen">
+      <section className="pt-32 pb-12 md:pb-16 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto">
           <h1 className="font-bebas text-enactus-white mb-4" style={{ fontSize: "clamp(48px, 8vw, 120px)" }}>
             OUR <span className="text-gold">TEAM</span>
@@ -66,7 +66,7 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }

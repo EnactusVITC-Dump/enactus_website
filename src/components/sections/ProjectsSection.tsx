@@ -49,7 +49,7 @@ export default function ProjectsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 md:py-40 px-6 md:px-12">
+    <section ref={sectionRef} className="relative py-24 md:pt-40 md:pb-16 px-6 md:px-12">
       <div className="max-w-[1200px] mx-auto">
         {/* Section Label */}
         <div className="mb-16 md:mb-24 flex justify-center">

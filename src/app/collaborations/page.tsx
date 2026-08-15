@@ -1,5 +1,6 @@
 "use client"
 
+<<<<<<< HEAD
 import Link from "next/link"
 import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
@@ -13,6 +14,9 @@ import {
   Users,
 } from "lucide-react"
 import Footer from "@/components/layout/Footer"
+=======
+
+>>>>>>> origin/main
 
 const CollaborationGlobe = dynamic(
   () => import("@/components/three/CollaborationGlobe"),
@@ -104,7 +108,7 @@ export default function CollaborationsPage() {
 
   return (
     <>
-      <section className="pt-32 pb-24 px-6 md:px-12 min-h-screen">
+      <section className="pt-32 pb-12 md:pb-16 px-6 md:px-12">
         <div className="max-w-[1600px] mx-auto">
           {/* Hero Section */}
           <div className="grid min-h-[560px] items-center gap-12 lg:grid-cols-[1fr_0.88fr]">
@@ -353,7 +357,7 @@ export default function CollaborationsPage() {
           </motion.div>
         </div>
       </section>
-      <Footer />
+
     </>
   )
 }
